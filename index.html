@@ -1,339 +1,252 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="QuantVLA: Quantizing Vision-Language-Action Models for efficient robot learning.">
-  <meta name="keywords" content="QuantVLA, Robotics, VLA, Quantization">
+  <meta name="description"
+    content="QuantVLA: The first post-training quantization framework for Vision-Language-Action models.">
+  <meta name="keywords" content="QuantVLA, Robotics, VLA, Quantization, PTQ, DiT">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>QuantVLA: Quantizing Vision-Language-Action Models</title>
 
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-
-    gtag('config', 'G-PYVRSFMDRL');
-  </script>
-
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
-
-  <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Styles -->
   <link rel="stylesheet" href="./static/css/index.css">
   <link rel="icon" href="./image/icon.png">
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script>
 </head>
 
 <body>
 
+  <!-- ===== Sticky Navbar ===== -->
+  <nav class="site-nav" id="siteNav">
+    <div class="nav-inner">
+      <a href="#" class="nav-brand">
+        <img src="./image/icon.png" alt="QuantVLA">
+        <span>QuantVLA</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#abstract">Abstract</a></li>
+        <li><a href="#method">Method</a></li>
+        <li><a href="#leaderboard">Leaderboard</a></li>
+        <li><a href="#comparison">Comparison</a></li>
+        <li><a href="#bibtex">BibTeX</a></li>
+      </ul>
+    </div>
+  </nav>
 
-  <section class="hero">
-    <div class="hero-body">
-      <div class="container is-max-desktop">
-        <div class="columns is-centered">
-          <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">
-              <img src="./image/icon.png" alt="Icon" style="vertical-align: middle; height: 100px; margin-right: 10px;">
-              <span style="font-size: 4rem; font-weight: bold; vertical-align: middle;">QuantVLA:</span>
-              <br>
-              <span class="is-size-2">Scale-Calibrated Post-Training Quantization for <br> Vision-Language-Action
-                Models</span>
-            </h1>
+  <!-- ===== Hero Section ===== -->
+  <section class="hero-main">
+    <div class="hero-content">
 
-            <div class="is-size-5 publication-authors">
-              <span class="author-block">
-                <a href="#">Jingxuan Zhang</a><sup>2†</sup>,
-              </span>
-              <span class="author-block">
-                <a href="#">Yunta Hsieh</a><sup>3†</sup>,
-              </span>
-              <span class="author-block">
-                <a href="#">Zhongwei Wang</a><sup>1</sup>,
-              </span>
-              <span class="author-block">
-                <a href="#">Haokun Lin</a><sup>4,5</sup>,
-              </span>
-              <span class="author-block">
-                <a href="#">Xin Wang</a><sup>1</sup>,
-              </span>
-              <span class="author-block">
-                <a href="#">Ziqi Wang</a><sup>1</sup>,
-              </span>
-              <span class="author-block">
-                <a href="#">Yingtie Lei</a><sup>1</sup>,
-              </span>
-              <span class="author-block">
-                <a href="#">Mi Zhang</a><sup>1</sup>*
-              </span>
-            </div>
+      <!-- "First" Badge -->
+      <div class="first-badge">🏆 First Post-Training Quantization for VLA Systems</div>
 
-            <div class="is-size-5 publication-authors">
-              <span class="author-block"><sup>1</sup>The Ohio State University,</span>
-              <span class="author-block"><sup>2</sup>Indiana University,</span>
-              <span class="author-block"><sup>3</sup>University of Michigan,</span>
-              <span class="author-block"><sup>4</sup>Institute of Automation, Chinese Academy of Sciences,</span>
-              <span class="author-block"><sup>5</sup>City University of Hong Kong</span>
-            </div>
-            <div class="is-size-6 publication-authors" style="margin-top: 0.3rem;">
-              <span class="author-block"><sup>†</sup>Equal Contribution, * Corresponding Author</span>
-            </div>
-
-            <div class="publication-links">
-              <!-- PDF Link. -->
-              <span class="link-block">
-                <a href="https://arxiv.org/pdf/2011.12948" class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                    <i class="fas fa-file-pdf"></i>
-                  </span>
-                  <span>Paper</span>
-                </a>
-              </span>
-              <span class="link-block">
-                <a href="https://arxiv.org/abs/2011.12948" class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                    <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
-                </a>
-              </span>
-              <!-- Code Link. -->
-              <span class="link-block">
-                <a href="https://github.com/AIoT-MLSys-Lab/QuantVLA"
-                  class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                    <i class="fab fa-github"></i>
-                  </span>
-                  <span>Code</span>
-                </a>
-              </span>
-            </div>
-          </div>
-        </div>
+      <!-- Large Icon + QuantVLA Title (like MMDR reference) -->
+      <div class="hero-logo-block">
+        <img src="./image/icon.png" alt="QuantVLA Icon">
+        <span class="hero-logo-text">QuantVLA</span>
       </div>
-    </div>
-    </div>
-  </section>
 
-  <section class="hero teaser">
-    <div class="container is-max-widescreen">
-      <div class="hero-body">
-        <div class="columns is-centered is-multiline">
-          <div class="column is-one-quarter">
-            <video autoplay muted loop playsinline style="width: 300px; height: auto; border-radius: 10px;">
-              <source src="./video/simulation1.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="column is-one-quarter">
-            <video autoplay muted loop playsinline style="width: 300px; height: auto; border-radius: 10px;">
-              <source src="./video/simluation2.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="column is-one-quarter">
-            <video autoplay muted loop playsinline style="width: 300px; height: auto; border-radius: 10px;">
-              <source src="./video/simulation3.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="column is-one-quarter">
-            <video autoplay muted loop playsinline style="width: 300px; height: auto; border-radius: 10px;">
-              <source src="./video/simulation4.mp4" type="video/mp4">
-            </video>
-          </div>
-        </div>
-        <h2 class="subtitle has-text-centered">
-          <span class="dnerf">QuantVLA</span> enables efficient robot learning through quantization.
-        </h2>
+      <p class="hero-subtitle">
+        Scale-Calibrated Post-Training Quantization for<br>
+        Vision-Language-Action Models
+      </p>
+
+      <!-- Authors -->
+      <div class="hero-authors">
+        <a href="#">Jingxuan Zhang</a><sup>2†</sup>,
+        <a href="#">Yunta Hsieh</a><sup>3†</sup>,
+        <a href="#">Zhongwei Wang</a><sup>1</sup>,
+        <a href="#">Haokun Lin</a><sup>4,5</sup>,
+        <a href="#">Xin Wang</a><sup>1</sup>,
+        <a href="#">Ziqi Wang</a><sup>1</sup>,
+        <a href="#">Yingtie Lei</a><sup>1</sup>,
+        <a href="#">Mi Zhang</a><sup>1</sup>*
+      </div>
+      <div class="hero-affiliations">
+        <sup>1</sup>The Ohio State University,
+        <sup>2</sup>Indiana University,
+        <sup>3</sup>University of Michigan,
+        <sup>4</sup>Institute of Automation, CAS,
+        <sup>5</sup>City University of Hong Kong
+      </div>
+      <div class="hero-note">
+        <sup>†</sup>Equal Contribution &nbsp;·&nbsp; * Corresponding Author
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="hero-buttons">
+        <a href="https://arxiv.org/pdf/2011.12948" class="hero-btn hero-btn-primary">
+          <i class="fas fa-file-pdf"></i> Paper
+        </a>
+        <a href="https://arxiv.org/abs/2011.12948" class="hero-btn hero-btn-outline">
+          <i class="ai ai-arxiv"></i> arXiv
+        </a>
+        <a href="https://github.com/AIoT-MLSys-Lab/QuantVLA" class="hero-btn hero-btn-outline">
+          <i class="fab fa-github"></i> Code
+        </a>
       </div>
     </div>
   </section>
 
-
-  <section class="section">
-    <div class="container is-max-desktop">
-      <!-- Abstract. -->
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-12">
-          <h2 class="title is-3" style="margin-bottom: 0.5rem;">Abstract</h2>
-          <div style="background-color: #f5f5f5; padding: 20px; border-radius: 10px;">
-            <div class="content has-text-justified">
-              <p>
-                Vision-language-action (VLA) models unify perception, language, and control for embodied agents but face
-                significant challenges in practical deployment due to rapidly increasing compute and memory demands,
-                especially as models scale to longer horizons and larger backbones. To address these bottlenecks, we
-                introduce <b>QuantVLA</b>, a training-free post-training quantization (PTQ) framework that, to our
-                knowledge, is the first PTQ approach for VLA systems and the first to successfully quantize a diffusion
-                transformer (DiT) action head. <b>QuantVLA</b> incorporates three scale-calibrated components: (1) a
-                selective quantization layout that integerizes all linear layers in both the language backbone and the
-                DiT while keeping attention projections in floating point to preserve the original operator schedule;
-                (2)
-                attention temperature matching, a lightweight per-head scaling mechanism that stabilizes attention
-                logits
-                and is folded into the dequantization scales at inference; and (3) output head balancing, a per-layer
-                residual interface calibration that mitigates post-projection energy drift. The framework requires no
-                additional training, uses only a small unlabeled calibration buffer, and supports integer kernels for
-                low-bit weights and activations while leaving the architecture unchanged. Across representative VLA
-                models on LIBERO, <b>QuantVLA</b> exceeds the task success rates of fully-precision baselines, achieves
-                about <b>70%</b> relative memory savings on the quantized components, providing a practical pathway
-                toward scalable low-bit embodied intelligence under strict compute, memory, and power constraints.
-              </p>
-
-            </div>
-          </div>
-        </div>
+  <!-- ===== Highlight Cards ===== -->
+  <section class="highlights-section">
+    <div class="highlights-grid">
+      <div class="highlight-card">
+        <div class="highlight-icon">🏆</div>
+        <div class="highlight-title">First PTQ for VLA</div>
+        <div class="highlight-desc">First post-training quantization framework for VLA systems and first to quantize a
+          DiT action head</div>
       </div>
-      <!--/ Abstract. -->
-
-      <!-- Evaluation Leaderboard. -->
-      <div class="columns is-centered has-text-centered" style="margin-top: 6rem;">
-        <div class="column is-12">
-          <h2 class="title is-3" style="margin-bottom: 0.5rem;">Evaluation Leaderboard</h2>
-          <div class="content has-text-justified">
-            <img src="./image/leaderboard.png" alt="Evaluation Leaderboard" style="width: 100%; margin-bottom: 20px;">
-          </div>
-        </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">💾</div>
+        <div class="highlight-title">~70% Memory Savings</div>
+        <div class="highlight-desc">Significant memory reduction on quantized components with no architecture changes
+          required</div>
       </div>
-      <!--/ Evaluation Leaderboard. -->
-
-      <!-- Comparison. -->
-      <div class="columns is-centered has-text-centered" style="margin-top: 3rem;">
-        <div class="column is-12">
-          <h2 class="title is-3" style="margin-bottom: 0.5rem;">Comparison of VLA Efficiency Paradigms</h2>
-          <div class="content has-text-justified">
-            <img src="./image/comparison.png" alt="Efficiency Comparison" style="width: 100%; margin-bottom: 20px;">
-          </div>
-        </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">⚡</div>
+        <div class="highlight-title">Training-Free</div>
+        <div class="highlight-desc">Uses only a small unlabeled calibration buffer — no additional training or
+          fine-tuning needed</div>
       </div>
-      <!--/ Comparison. -->
-
-      <!-- Experiment. -->
-      <div class="columns is-centered has-text-centered" style="margin-top: 6rem;">
-        <div class="column is-12">
-          <h2 class="title is-3" style="margin-bottom: 0.5rem;">Experiment</h2>
-          <div class="content has-text-justified">
-            <img src="./image/experiment1.png" alt="Experiment" style="width: 100%; margin-bottom: 20px;">
-          </div>
-        </div>
-      </div>
-      <!--/ Experiment. -->
-
     </div>
   </section>
 
-
-
-
-  <section class="section">
-    <div class="container is-max-desktop">
-
-      <div class="columns is-centered">
-        <div class="column is-full-width">
-          <h2 class="title is-3 has-text-centered">Method</h2>
-          <div class="content has-text-justified">
-            <p>
-              Qualitative and quantitative results demonstrating the efficiency and accuracy of QuantVLA will be
-              presented here.
-              The method relies on post-training quantization to reduce model size while maintaining VLA
-              capabilities.
-            </p>
-            <!-- Add Method diagram image here -->
-            <img src="./image/pipeline1.svg" alt="Method Overview" style="width:100%">
-          </div>
-        </div>
+  <!-- ===== Video Demos ===== -->
+  <section class="demo-section">
+    <div class="demo-inner">
+      <div class="demo-videos">
+        <video autoplay muted loop playsinline>
+          <source src="./video/simulation1.mp4" type="video/mp4">
+        </video>
+        <video autoplay muted loop playsinline>
+          <source src="./video/simluation2.mp4" type="video/mp4">
+        </video>
+        <video autoplay muted loop playsinline>
+          <source src="./video/simulation3.mp4" type="video/mp4">
+        </video>
+        <video autoplay muted loop playsinline>
+          <source src="./video/simulation4.mp4" type="video/mp4">
+        </video>
       </div>
-
-      <div class="columns is-centered">
-        <div class="column is-full-width">
-          <h2 class="title is-3">Results</h2>
-          <div class="content has-text-justified">
-            <p>
-              We compare QuantVLA against full-precision baselines on the Libero and OpenVLA benchmarks.
-            </p>
-            <!-- Add Results table/image here -->
-          </div>
-        </div>
-      </div>
-
-
-      <!-- Concurrent Work. -->
-      <div class="columns is-centered">
-        <div class="column is-full-width">
-          <h2 class="title is-3">Related Links</h2>
-
-          <div class="content has-text-justified">
-            <p>
-              There's a lot of excellent work that was introduced around the same time as ours.
-            </p>
-            <p>
-            <p>
-              We build upon recent advances in Vision-Language Models (VLMs) and Model Quantization.
-              Relevant works include OpenVLA, RT-2, and various post-training quantization methods.
-            </p>
-          </div>
-        </div>
-      </div>
-      <!--/ Concurrent Work. -->
-
+      <p class="demo-caption">
+        <span class="dnerf">QuantVLA</span> enables efficient robot learning through quantization.
+      </p>
     </div>
   </section>
 
+  <!-- ===== Abstract ===== -->
+  <section class="content-section" id="abstract">
+    <div class="section-inner">
+      <h2 class="section-title">Abstract</h2>
+      <div class="abstract-box">
+        <p>
+          Vision-language-action (VLA) models unify perception, language, and control for embodied agents but face
+          significant challenges in practical deployment due to rapidly increasing compute and memory demands,
+          especially as models scale to longer horizons and larger backbones. To address these bottlenecks, we
+          introduce <b>QuantVLA</b>, a training-free post-training quantization (PTQ) framework that, to our
+          knowledge, is the first PTQ approach for VLA systems and the first to successfully quantize a diffusion
+          transformer (DiT) action head. <b>QuantVLA</b> incorporates three scale-calibrated components: (1) a
+          selective quantization layout that integerizes all linear layers in both the language backbone and the
+          DiT while keeping attention projections in floating point to preserve the original operator schedule; (2)
+          attention temperature matching, a lightweight per-head scaling mechanism that stabilizes attention logits
+          and is folded into the dequantization scales at inference; and (3) output head balancing, a per-layer
+          residual interface calibration that mitigates post-projection energy drift. The framework requires no
+          additional training, uses only a small unlabeled calibration buffer, and supports integer kernels for
+          low-bit weights and activations while leaving the architecture unchanged. Across representative VLA
+          models on LIBERO, <b>QuantVLA</b> exceeds the task success rates of fully-precision baselines, achieves
+          about <b>70%</b> relative memory savings on the quantized components, providing a practical pathway
+          toward scalable low-bit embodied intelligence under strict compute, memory, and power constraints.
+        </p>
+      </div>
+    </div>
+  </section>
 
-  <section class="section" id="BibTeX">
-    <div class="container is-max-desktop content">
-      <h2 class="title">BibTeX</h2>
-      <pre><code>@article{quantvla2026,
+  <!-- ===== Method ===== -->
+  <section class="content-section" id="method">
+    <div class="section-inner wide">
+      <h2 class="section-title">Method</h2>
+      <p class="method-text">
+        Qualitative and quantitative results demonstrating the efficiency and accuracy of QuantVLA will be
+        presented here. The method relies on post-training quantization to reduce model size while maintaining
+        VLA capabilities.
+      </p>
+      <img src="./image/pipeline1.svg" alt="Method Overview" class="method-img">
+    </div>
+  </section>
+
+  <!-- ===== Evaluation Leaderboard ===== -->
+  <section class="content-section" id="leaderboard">
+    <div class="section-inner wide">
+      <h2 class="section-title">Evaluation Leaderboard</h2>
+      <img src="./image/leaderboard.png" alt="Evaluation Leaderboard" class="section-img">
+    </div>
+  </section>
+
+  <!-- ===== Comparison ===== -->
+  <section class="content-section" id="comparison">
+    <div class="section-inner wide">
+      <h2 class="section-title">Comparison of VLA Efficiency Paradigms</h2>
+      <img src="./image/comparison.png" alt="Efficiency Comparison" class="section-img">
+    </div>
+  </section>
+
+  <!-- ===== Related Links ===== -->
+  <section class="content-section" id="related">
+    <div class="section-inner">
+      <h2 class="section-title">Related Links</h2>
+      <p class="related-text">
+        We build upon recent advances in Vision-Language Models (VLMs) and Model Quantization.
+        Relevant works include OpenVLA, RT-2, and various post-training quantization methods.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== BibTeX ===== -->
+  <section class="bibtex-section" id="bibtex">
+    <div class="bibtex-inner">
+      <h2 class="section-title">BibTeX</h2>
+      <div class="bibtex-box">
+        <code>@article{quantvla2026,
   author    = {Anonymous},
   title     = {QuantVLA: Quantizing Vision-Language-Action Models},
   journal   = {CVPR Submission},
   year      = {2026},
-}</code></pre>
+}</code>
+      </div>
     </div>
   </section>
 
-
-  <footer class="footer">
-    <div class="container">
-      <div class="content has-text-centered">
-        <a class="icon-link" href="#" class="external-link" disabled>
-          <i class="fas fa-file-pdf"></i>
-        </a>
-        <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
-          <i class="fab fa-github"></i>
-        </a>
-      </div>
-      <div class="columns is-centered">
-        <div class="column is-8">
-          <div class="content">
-            <p>
-              This website is licensed under a <a rel="license"
-                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
-                Commons Attribution-ShareAlike 4.0 International License</a>.
-            </p>
-            <p>
-              This means you are free to borrow the <a href="https://github.com/nerfies/nerfies.github.io">source
-                code</a> of this website,
-              we just ask that you link back to this page in the footer.
-              Please remember to remove the analytics code included in the header of the website which
-              you do not want on your website.
-            </p>
-          </div>
-        </div>
-      </div>
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer">
+    <div class="footer-icons">
+      <a href="#"><i class="fas fa-file-pdf"></i></a>
+      <a href="https://github.com/AIoT-MLSys-Lab/QuantVLA"><i class="fab fa-github"></i></a>
     </div>
+    <p>
+      This website is licensed under a
+      <a href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 License</a>.
+      Template adapted from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+    </p>
   </footer>
+
+  <!-- ===== Navbar scroll effect ===== -->
+  <script>
+    window.addEventListener('scroll', function () {
+      const nav = document.getElementById('siteNav');
+      if (window.scrollY > 20) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+  </script>
 
 </body>
 
