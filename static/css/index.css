@@ -817,6 +817,29 @@ body {
   color: #b45309;
 }
 
+/* Model badges */
+.lb-badge {
+  display: inline-block;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.lb-badge-pi {
+  background: rgba(124, 58, 237, 0.12);
+  color: #7c3aed;
+  border: 1px solid rgba(124, 58, 237, 0.25);
+}
+
+.lb-badge-groot {
+  background: rgba(6, 214, 160, 0.12);
+  color: #059669;
+  border: 1px solid rgba(6, 214, 160, 0.3);
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
   .hero-logo-text {

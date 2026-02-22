@@ -238,25 +238,27 @@
         <table class="lb-table" id="lbTable">
           <thead>
             <tr>
-              <th class="lb-sortable" data-col="0" data-en="Model" data-zh="模型">Model <span class="sort-icon">⇅</span>
+              <th data-en="Base Model" data-zh="基础模型">Base Model</th>
+              <th class="lb-sortable" data-col="1" data-en="Method" data-zh="方法">Method <span class="sort-icon">⇅</span>
               </th>
               <th data-en="Precision" data-zh="精度">Precision</th>
               <th data-en="Layer Selection" data-zh="层选择">Layer Selection</th>
-              <th class="lb-sortable" data-col="3" data-en="Spatial" data-zh="空间">Spatial <span
+              <th class="lb-sortable" data-col="4" data-en="Spatial" data-zh="空间">Spatial <span
                   class="sort-icon">⇅</span></th>
-              <th class="lb-sortable" data-col="4" data-en="Object" data-zh="物体">Object <span class="sort-icon">⇅</span>
+              <th class="lb-sortable" data-col="5" data-en="Object" data-zh="物体">Object <span class="sort-icon">⇅</span>
               </th>
-              <th class="lb-sortable" data-col="5" data-en="Goal" data-zh="目标">Goal <span class="sort-icon">⇅</span>
+              <th class="lb-sortable" data-col="6" data-en="Goal" data-zh="目标">Goal <span class="sort-icon">⇅</span>
               </th>
-              <th class="lb-sortable" data-col="6" data-en="Long" data-zh="长序列">Long <span class="sort-icon">⇅</span>
+              <th class="lb-sortable" data-col="7" data-en="Long" data-zh="长序列">Long <span class="sort-icon">⇅</span>
               </th>
-              <th class="lb-sortable" data-col="7" data-en="Avg" data-zh="平均">Avg <span class="sort-icon">⇅</span></th>
+              <th class="lb-sortable" data-col="8" data-en="Avg" data-zh="平均">Avg <span class="sort-icon">⇅</span></th>
             </tr>
           </thead>
           <tbody>
             <!-- π0.5 rows -->
             <tr data-model="pi" data-method="baseline">
-              <td>π0.5</td>
+              <td><span class="lb-badge lb-badge-pi">π0.5</span></td>
+              <td>Baseline</td>
               <td>FP16</td>
               <td>–</td>
               <td>98.50</td>
@@ -266,6 +268,7 @@
               <td>97.10</td>
             </tr>
             <tr data-model="pi" data-method="smoothquant">
+              <td><span class="lb-badge lb-badge-pi">π0.5</span></td>
               <td>+SmoothQuant</td>
               <td>W8A8</td>
               <td>LLM</td>
@@ -276,6 +279,7 @@
               <td>96.60</td>
             </tr>
             <tr data-model="pi" data-method="smoothquant">
+              <td><span class="lb-badge lb-badge-pi">π0.5</span></td>
               <td>+SmoothQuant</td>
               <td>W8A8</td>
               <td>LLM + DiT(MLP)</td>
@@ -286,6 +290,7 @@
               <td>97.00</td>
             </tr>
             <tr data-model="pi" data-method="duquant">
+              <td><span class="lb-badge lb-badge-pi">π0.5</span></td>
               <td>+DuQuant</td>
               <td>W4A8</td>
               <td>LLM</td>
@@ -296,6 +301,7 @@
               <td>96.50</td>
             </tr>
             <tr data-model="pi" data-method="duquant">
+              <td><span class="lb-badge lb-badge-pi">π0.5</span></td>
               <td>+DuQuant</td>
               <td>W4A8</td>
               <td>LLM + DiT(MLP)</td>
@@ -306,6 +312,7 @@
               <td>95.40</td>
             </tr>
             <tr data-model="pi" data-method="quantvla" class="lb-highlight">
+              <td><span class="lb-badge lb-badge-pi">π0.5</span></td>
               <td><strong>+QuantVLA</strong></td>
               <td>W4A8</td>
               <td>LLM</td>
@@ -316,6 +323,7 @@
               <td><strong>97.60</strong></td>
             </tr>
             <tr data-model="pi" data-method="quantvla" class="lb-highlight">
+              <td><span class="lb-badge lb-badge-pi">π0.5</span></td>
               <td><strong>+QuantVLA</strong></td>
               <td>W4A8</td>
               <td>LLM + DiT(MLP)</td>
@@ -327,7 +335,8 @@
             </tr>
             <!-- GR00T N1.5 rows -->
             <tr data-model="groot" data-method="baseline">
-              <td>GR00T N1.5</td>
+              <td><span class="lb-badge lb-badge-groot">GR00T</span></td>
+              <td>Baseline</td>
               <td>FP16</td>
               <td>–</td>
               <td>92.00</td>
@@ -337,6 +346,7 @@
               <td>86.50</td>
             </tr>
             <tr data-model="groot" data-method="duquant">
+              <td><span class="lb-badge lb-badge-groot">GR00T</span></td>
               <td>+DuQuant</td>
               <td>W4A8</td>
               <td>LLM</td>
@@ -347,6 +357,7 @@
               <td>84.50</td>
             </tr>
             <tr data-model="groot" data-method="duquant">
+              <td><span class="lb-badge lb-badge-groot">GR00T</span></td>
               <td>+DuQuant</td>
               <td>W4A8</td>
               <td>LLM + DiT</td>
@@ -357,6 +368,7 @@
               <td>70.00</td>
             </tr>
             <tr data-model="groot" data-method="quantvla" class="lb-highlight">
+              <td><span class="lb-badge lb-badge-groot">GR00T</span></td>
               <td><strong>+QuantVLA</strong></td>
               <td>W4A8</td>
               <td>LLM</td>
@@ -367,6 +379,7 @@
               <td>87.00</td>
             </tr>
             <tr data-model="groot" data-method="quantvla" class="lb-highlight">
+              <td><span class="lb-badge lb-badge-groot">GR00T</span></td>
               <td><strong>+QuantVLA</strong></td>
               <td>W4A8</td>
               <td>LLM + DiT</td>
