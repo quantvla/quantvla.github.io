@@ -30,12 +30,17 @@
         <span>QuantVLA</span>
       </a>
       <ul class="nav-links">
-        <li><a href="#abstract">Abstract</a></li>
-        <li><a href="#method">Method</a></li>
-        <li><a href="#memory">Memory</a></li>
-        <li><a href="#leaderboard">Leaderboard</a></li>
-        <li><a href="#comparison">Comparison</a></li>
+        <li><a href="#abstract" data-en="Abstract" data-zh="摘要">Abstract</a></li>
+        <li><a href="#method" data-en="Method" data-zh="方法">Method</a></li>
+        <li><a href="#memory" data-en="Memory" data-zh="内存">Memory</a></li>
+        <li><a href="#leaderboard" data-en="Leaderboard" data-zh="排行榜">Leaderboard</a></li>
+        <li><a href="#comparison" data-en="Comparison" data-zh="对比">Comparison</a></li>
         <li><a href="#bibtex">BibTeX</a></li>
+        <li>
+          <button id="langToggle" class="lang-btn" title="Switch Language">
+            <i class="fas fa-globe"></i> EN
+          </button>
+        </li>
       </ul>
     </div>
   </nav>
@@ -45,15 +50,18 @@
     <div class="hero-content">
 
       <!-- "First" Badge -->
-      <div class="first-badge">🏆 First Post-Training Quantization for VLA Systems</div>
+      <div class="first-badge" data-en="🏆 First Post-Training Quantization for VLA Systems"
+        data-zh="🏆 首个面向 VLA 系统的训练后量化方法">🏆 First Post-Training Quantization for VLA Systems</div>
 
-      <!-- Large Icon + QuantVLA Title (like MMDR reference) -->
+      <!-- Large Icon + QuantVLA Title -->
       <div class="hero-logo-block">
         <img src="./image/icon.png" alt="QuantVLA Icon">
         <span class="hero-logo-text">QuantVLA</span>
       </div>
 
-      <p class="hero-subtitle">
+      <p class="hero-subtitle"
+        data-en="Scale-Calibrated Post-Training Quantization for<br>Vision-Language-Action Models"
+        data-zh="面向视觉-语言-动作模型的<br>尺度校准训练后量化">
         Scale-Calibrated Post-Training Quantization for<br>
         Vision-Language-Action Models
       </p>
@@ -75,7 +83,7 @@
         <sup>3</sup>University of Michigan,
         <sup>4</sup>City University of Hong Kong
       </div>
-      <div class="hero-note">
+      <div class="hero-note" data-en="<sup>†</sup>Equal Contribution" data-zh="<sup>†</sup>同等贡献">
         <sup>†</sup>Equal Contribution
       </div>
       <div style="color: #ffffff; font-size: 1rem; margin-bottom: 1.5rem;">
@@ -102,20 +110,28 @@
     <div class="highlights-grid">
       <div class="highlight-card">
         <div class="highlight-icon">🏆</div>
-        <div class="highlight-title">First PTQ for VLA</div>
-        <div class="highlight-desc">First post-training quantization framework for VLA systems and first to quantize a
+        <div class="highlight-title" data-en="First PTQ for VLA" data-zh="首个 VLA 量化方案">First PTQ for VLA</div>
+        <div class="highlight-desc"
+          data-en="First post-training quantization framework for VLA systems and first to quantize a DiT action head"
+          data-zh="首个面向 VLA 系统的训练后量化框架，也是首个成功量化 DiT 动作头的方法">First post-training quantization framework for VLA systems
+          and first to quantize a
           DiT action head</div>
       </div>
       <div class="highlight-card">
         <div class="highlight-icon">💾</div>
-        <div class="highlight-title">~70% Memory Savings</div>
-        <div class="highlight-desc">Significant memory reduction on quantized components with no architecture changes
+        <div class="highlight-title" data-en="~70% Memory Savings" data-zh="~70% 内存节省">~70% Memory Savings</div>
+        <div class="highlight-desc"
+          data-en="Significant memory reduction on quantized components with no architecture changes required"
+          data-zh="量化组件显著减少内存占用，无需任何架构修改">Significant memory reduction on quantized components with no architecture
+          changes
           required</div>
       </div>
       <div class="highlight-card">
         <div class="highlight-icon">⚡</div>
-        <div class="highlight-title">Training-Free</div>
-        <div class="highlight-desc">Uses only a small unlabeled calibration buffer — no additional training or
+        <div class="highlight-title" data-en="Training-Free" data-zh="无需训练">Training-Free</div>
+        <div class="highlight-desc"
+          data-en="Uses only a small unlabeled calibration buffer — no additional training or fine-tuning needed"
+          data-zh="仅需少量无标注校准数据，无需额外训练或微调">Uses only a small unlabeled calibration buffer — no additional training or
           fine-tuning needed</div>
       </div>
     </div>
@@ -138,7 +154,9 @@
           <source src="./video/simulation4.mp4" type="video/mp4">
         </video>
       </div>
-      <p class="demo-caption">
+      <p class="demo-caption"
+        data-en="<span class='dnerf'>QuantVLA</span> enables efficient robot learning through quantization."
+        data-zh="<span class='dnerf'>QuantVLA</span> 通过量化技术实现高效的机器人学习。">
         <span class="dnerf">QuantVLA</span> enables efficient robot learning through quantization.
       </p>
     </div>
@@ -147,9 +165,10 @@
   <!-- ===== Abstract ===== -->
   <section class="content-section" id="abstract">
     <div class="section-inner">
-      <h2 class="section-title">Abstract</h2>
+      <h2 class="section-title" data-en="Abstract" data-zh="摘要">Abstract</h2>
       <div class="abstract-box">
-        <p>
+        <p data-en="Vision-language-action (VLA) models unify perception, language, and control for embodied agents but face significant challenges in practical deployment due to rapidly increasing compute and memory demands, especially as models scale to longer horizons and larger backbones. To address these bottlenecks, we introduce <b>QuantVLA</b>, a training-free post-training quantization (PTQ) framework that, to our knowledge, is the first PTQ approach for VLA systems and the first to successfully quantize a diffusion transformer (DiT) action head. <b>QuantVLA</b> incorporates three scale-calibrated components: (1) a selective quantization layout that integerizes all linear layers in both the language backbone and the DiT while keeping attention projections in floating point to preserve the original operator schedule; (2) attention temperature matching, a lightweight per-head scaling mechanism that stabilizes attention logits and is folded into the dequantization scales at inference; and (3) output head balancing, a per-layer residual interface calibration that mitigates post-projection energy drift. The framework requires no additional training, uses only a small unlabeled calibration buffer, and supports integer kernels for low-bit weights and activations while leaving the architecture unchanged. Across representative VLA models on LIBERO, <b>QuantVLA</b> exceeds the task success rates of fully-precision baselines, achieves about <b>70%</b> relative memory savings on the quantized components, providing a practical pathway toward scalable low-bit embodied intelligence under strict compute, memory, and power constraints."
+          data-zh="视觉-语言-动作（VLA）模型将感知、语言和控制统一用于具身智能体，但由于计算和内存需求的快速增长，尤其是模型扩展到更长的时间跨度和更大的骨干网络时，在实际部署中面临巨大挑战。为了解决这些瓶颈，我们提出了 <b>QuantVLA</b>——一个无需训练的训练后量化（PTQ）框架。据我们所知，这是首个面向 VLA 系统的 PTQ 方法，也是首个成功量化扩散 Transformer（DiT）动作头的方法。<b>QuantVLA</b> 包含三个尺度校准组件：（1）选择性量化布局，将语言骨干和 DiT 中的所有线性层整数化，同时保持注意力投影为浮点数以保留原始算子调度；（2）注意力温度匹配，一种轻量级的逐头缩放机制，用于稳定注意力 logits 并在推理时折叠到反量化缩放因子中；（3）输出头平衡，一种逐层残差接口校准，用于缓解投影后的能量漂移。该框架无需额外训练，仅使用少量无标注的校准缓冲区，支持低比特权重和激活的整数核，同时保持架构不变。在 LIBERO 基准上的代表性 VLA 模型上，<b>QuantVLA</b> 超过了全精度基线的任务成功率，在量化组件上实现了约 <b>70%</b> 的相对内存节省，为在严格的计算、内存和功耗约束下实现可扩展的低比特具身智能提供了一条可行路径。">
           Vision-language-action (VLA) models unify perception, language, and control for embodied agents but face
           significant challenges in practical deployment due to rapidly increasing compute and memory demands,
           especially as models scale to longer horizons and larger backbones. To address these bottlenecks, we
@@ -174,8 +193,10 @@
   <!-- ===== Method ===== -->
   <section class="content-section" id="method">
     <div class="section-inner wide">
-      <h2 class="section-title">Method</h2>
-      <p class="method-text">
+      <h2 class="section-title" data-en="Method" data-zh="方法">Method</h2>
+      <p class="method-text"
+        data-en="Qualitative and quantitative results demonstrating the efficiency and accuracy of QuantVLA will be presented here. The method relies on post-training quantization to reduce model size while maintaining VLA capabilities."
+        data-zh="定性和定量结果展示了 QuantVLA 的效率和准确性。该方法依赖训练后量化来减少模型大小，同时保持 VLA 能力。">
         Qualitative and quantitative results demonstrating the efficiency and accuracy of QuantVLA will be
         presented here. The method relies on post-training quantization to reduce model size while maintaining
         VLA capabilities.
@@ -187,7 +208,7 @@
   <!-- ===== Memory Efficiency ===== -->
   <section class="content-section" id="memory">
     <div class="section-inner wide">
-      <h2 class="section-title">Memory Efficiency</h2>
+      <h2 class="section-title" data-en="Memory Efficiency" data-zh="内存效率">Memory Efficiency</h2>
       <img src="./image/memory_comparison.png" alt="Memory Comparison: Baseline vs QuantVLA" class="section-img">
     </div>
   </section>
@@ -195,7 +216,7 @@
   <!-- ===== Evaluation Leaderboard ===== -->
   <section class="content-section" id="leaderboard">
     <div class="section-inner wide">
-      <h2 class="section-title">Leaderboard</h2>
+      <h2 class="section-title" data-en="Leaderboard" data-zh="排行榜">Leaderboard</h2>
       <img src="./image/leaderboard.png" alt="Evaluation Leaderboard" class="section-img">
     </div>
   </section>
@@ -203,20 +224,31 @@
   <!-- ===== Comparison ===== -->
   <section class="content-section" id="comparison">
     <div class="section-inner wide">
-      <h2 class="section-title">Comparison of VLA Efficiency Paradigms</h2>
+      <h2 class="section-title" data-en="Comparison of VLA Efficiency Paradigms" data-zh="VLA 效率范式对比">Comparison of VLA
+        Efficiency Paradigms</h2>
       <img src="./image/comparison.png" alt="Efficiency Comparison" class="section-img">
     </div>
   </section>
 
 
-  <!-- ===== Related Links ===== -->
-  <section class="content-section" id="related">
+  <!-- ===== Conclusion ===== -->
+  <section class="content-section" id="conclusion">
     <div class="section-inner">
-      <h2 class="section-title">Related Links</h2>
-      <p class="related-text">
-        We build upon recent advances in Vision-Language Models (VLMs) and Model Quantization.
-        Relevant works include OpenVLA, RT-2, and various post-training quantization methods.
-      </p>
+      <h2 class="section-title" data-en="Conclusion" data-zh="结论">Conclusion</h2>
+      <div class="abstract-box">
+        <p data-en="We present <b>QuantVLA</b>, the <b>first PTQ framework for VLA models</b> that surpasses full precision baselines without any additional training. Using a <b>selective layout</b>, it integerizes the language backbone and the feedforward blocks of the diffusion transformer while attention projections remain in floating point. Two lightweight calibration scalars align the <b>attention temperature</b> and restore the <b>output energy</b>, thereby stabilizing low-bit inference. As a result, QuantVLA <b>reduces memory usage</b> and <b>improves accuracy</b>. Overall, QuantVLA is <b>training-free</b>, preserves the original architecture, and is robust across modalities, offering a practical path to <b>low-bit deployment</b> and laying the groundwork for future advances, lower power budgets, and reliable long-horizon generation."
+          data-zh="我们提出了 <b>QuantVLA</b>，它是<b>首个面向 VLA 模型的 PTQ 框架</b>，在无需额外训练的情况下超越了全精度基线。通过<b>选择性布局</b>，它将语言骨干和扩散 Transformer 的前馈块整数化，同时保持注意力投影为浮点数。两个轻量级校准标量对齐了<b>注意力温度</b>并恢复了<b>输出能量</b>，从而稳定了低比特推理。因此，QuantVLA <b>减少了内存使用</b>并<b>提升了精度</b>。总的来说，QuantVLA 是<b>无需训练的</b>，保留了原始架构，并且在多模态下具有鲁棒性，为<b>低比特部署</b>提供了一条可行路径，并为未来的进步、更低的功耗预算和可靠的长时间生成奠定了基础。">
+          We present <b>QuantVLA</b>, the <b>first PTQ framework for VLA models</b> that surpasses full precision
+          baselines without any additional training. Using a <b>selective layout</b>, it integerizes the language
+          backbone and the feedforward blocks of the diffusion transformer while attention projections remain in
+          floating point. Two lightweight calibration scalars align the <b>attention temperature</b> and restore
+          the <b>output energy</b>, thereby stabilizing low-bit inference. As a result, QuantVLA <b>reduces memory
+            usage</b> and <b>improves accuracy</b>. Overall, QuantVLA is <b>training-free</b>, preserves the
+          original architecture, and is robust across modalities, offering a practical path to <b>low-bit
+            deployment</b> and laying the groundwork for future advances, lower power budgets, and reliable
+          long-horizon generation.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -248,8 +280,9 @@
     </p>
   </footer>
 
-  <!-- ===== Navbar scroll effect ===== -->
+  <!-- ===== Scripts ===== -->
   <script>
+    // Navbar scroll effect
     window.addEventListener('scroll', function () {
       const nav = document.getElementById('siteNav');
       if (window.scrollY > 20) {
@@ -258,6 +291,22 @@
         nav.classList.remove('scrolled');
       }
     });
+
+    // Language switcher
+    (function () {
+      const btn = document.getElementById('langToggle');
+      let lang = 'en';
+
+      btn.addEventListener('click', function () {
+        lang = lang === 'en' ? 'zh' : 'en';
+        btn.innerHTML = '<i class="fas fa-globe"></i> ' + (lang === 'en' ? 'EN' : '中文');
+        document.documentElement.lang = lang === 'en' ? 'en' : 'zh-CN';
+
+        document.querySelectorAll('[data-en][data-zh]').forEach(function (el) {
+          el.innerHTML = el.getAttribute('data-' + lang);
+        });
+      });
+    })();
   </script>
 
 </body>
