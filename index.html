@@ -178,20 +178,17 @@
                 knowledge, is the first PTQ approach for VLA systems and the first to successfully quantize a diffusion
                 transformer (DiT) action head. <b>QuantVLA</b> incorporates three scale-calibrated components: (1) a
                 selective quantization layout that integerizes all linear layers in both the language backbone and the
-                DiT
-                while keeping attention projections in floating point to preserve the original operator schedule; (2)
+                DiT while keeping attention projections in floating point to preserve the original operator schedule;
+                (2)
                 attention temperature matching, a lightweight per-head scaling mechanism that stabilizes attention
                 logits
                 and is folded into the dequantization scales at inference; and (3) output head balancing, a per-layer
                 residual interface calibration that mitigates post-projection energy drift. The framework requires no
                 additional training, uses only a small unlabeled calibration buffer, and supports integer kernels for
                 low-bit weights and activations while leaving the architecture unchanged. Across representative VLA
-                models
-                on LIBERO, <b>QuantVLA</b> exceeds the task success rates of full-precision baselines, achieves about
-                <b>70%</b> relative memory savings on the quantized components, and delivers a <b>1.22×</b> speedup in
-                end-to-end inference latency, providing a practical pathway toward scalable low-bit embodied
-                intelligence
-                under strict compute, memory, and power constraints.
+                models on LIBERO, <b>QuantVLA</b> exceeds the task success rates of fully-precision baselines, achieves
+                about <b>70%</b> relative memory savings on the quantized components, providing a practical pathway
+                toward scalable low-bit embodied intelligence under strict compute, memory, and power constraints.
               </p>
 
             </div>
