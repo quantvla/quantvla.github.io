@@ -536,25 +536,33 @@
       });
 
       // Column sorting
+      const methodOrder = { 'baseline': 0, '+smoothquant': 1, '+duquant': 2, '+quantvla': 3 };
+      // Store original order for reset
+      rows.forEach(function (r, i) { r.setAttribute('data-orig', i); });
       let sortCol = -1, sortAsc = true;
       table.querySelectorAll('th.lb-sortable').forEach(function (th) {
         th.addEventListener('click', function () {
           const col = parseInt(th.getAttribute('data-col'));
-          if (sortCol === col) { sortAsc = !sortAsc; } else { sortCol = col; sortAsc = false; }
           const tbody = table.querySelector('tbody');
-          rows.sort(function (a, b) {
-            let va = a.children[col].textContent.trim();
-            let vb = b.children[col].textContent.trim();
-            const na = parseFloat(va), nb = parseFloat(vb);
-            if (!isNaN(na) && !isNaN(nb)) {
+
+          if (col === 1) {
+            // Method column: reset to default order
+            rows.sort(function (a, b) {
+              return parseInt(a.getAttribute('data-orig')) - parseInt(b.getAttribute('data-orig'));
+            });
+            sortCol = -1;
+            table.querySelectorAll('.sort-icon').forEach(s => s.textContent = '⇅');
+          } else {
+            if (sortCol === col) { sortAsc = !sortAsc; } else { sortCol = col; sortAsc = false; }
+            rows.sort(function (a, b) {
+              const na = parseFloat(a.children[col].textContent.trim());
+              const nb = parseFloat(b.children[col].textContent.trim());
               return sortAsc ? na - nb : nb - na;
-            }
-            return sortAsc ? va.localeCompare(vb) : vb.localeCompare(va);
-          });
+            });
+            table.querySelectorAll('.sort-icon').forEach(s => s.textContent = '⇅');
+            th.querySelector('.sort-icon').textContent = sortAsc ? '↑' : '↓';
+          }
           rows.forEach(r => tbody.appendChild(r));
-          // Update sort icons
-          table.querySelectorAll('.sort-icon').forEach(s => s.textContent = '⇅');
-          th.querySelector('.sort-icon').textContent = sortAsc ? '↑' : '↓';
         });
       });
     })();
