@@ -217,12 +217,17 @@
       <p class="leaderboard-subtitle" data-en="LIBERO Benchmark — Success Rate (%)" data-zh="LIBERO 基准 — 成功率 (%)">LIBERO
         Benchmark — Success Rate (%)</p>
 
-      <!-- Model Filter Tabs -->
+      <!-- Model Filter Dropdown -->
       <div class="lb-controls">
-        <div class="lb-tabs">
-          <button class="lb-tab active" data-filter="all" data-en="All Models" data-zh="全部模型">All Models</button>
-          <button class="lb-tab" data-filter="pi" data-en="π0.5" data-zh="π0.5">π0.5</button>
-          <button class="lb-tab" data-filter="groot" data-en="GR00T N1.5" data-zh="GR00T N1.5">GR00T N1.5</button>
+        <div class="lb-dropdown" id="lbDropdown">
+          <button class="lb-dropdown-btn" id="lbDropdownBtn" data-en="All Models" data-zh="全部模型">
+            All Models <span class="lb-arrow">▾</span>
+          </button>
+          <ul class="lb-dropdown-menu" id="lbDropdownMenu">
+            <li class="lb-dropdown-item active" data-filter="all" data-en="All Models" data-zh="全部模型">All Models</li>
+            <li class="lb-dropdown-item" data-filter="pi" data-en="π0.5" data-zh="π0.5">π0.5</li>
+            <li class="lb-dropdown-item" data-filter="groot" data-en="GR00T N1.5" data-zh="GR00T N1.5">GR00T N1.5</li>
+          </ul>
         </div>
         <div class="lb-methods">
           <label class="lb-check"><input type="checkbox" value="baseline" checked> <span data-en="Baseline (FP16)"
@@ -482,7 +487,9 @@
       const table = document.getElementById('lbTable');
       if (!table) return;
       const rows = Array.from(table.querySelectorAll('tbody tr'));
-      const tabs = document.querySelectorAll('.lb-tab');
+      const dropdown = document.getElementById('lbDropdown');
+      const dropdownBtn = document.getElementById('lbDropdownBtn');
+      const dropdownItems = document.querySelectorAll('.lb-dropdown-item');
       const checks = document.querySelectorAll('.lb-check input');
       let activeModel = 'all';
 
@@ -497,13 +504,30 @@
         });
       }
 
-      tabs.forEach(function (tab) {
-        tab.addEventListener('click', function () {
-          tabs.forEach(t => t.classList.remove('active'));
-          tab.classList.add('active');
-          activeModel = tab.getAttribute('data-filter');
+      // Toggle dropdown
+      dropdownBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        dropdown.classList.toggle('open');
+      });
+
+      // Select item
+      dropdownItems.forEach(function (item) {
+        item.addEventListener('click', function () {
+          dropdownItems.forEach(i => i.classList.remove('active'));
+          item.classList.add('active');
+          activeModel = item.getAttribute('data-filter');
+          // Update button text
+          const arrow = dropdownBtn.querySelector('.lb-arrow');
+          dropdownBtn.textContent = item.textContent + ' ';
+          dropdownBtn.appendChild(arrow);
+          dropdown.classList.remove('open');
           applyFilters();
         });
+      });
+
+      // Close on outside click
+      document.addEventListener('click', function () {
+        dropdown.classList.remove('open');
       });
 
       checks.forEach(function (cb) {
