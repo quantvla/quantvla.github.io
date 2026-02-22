@@ -214,7 +214,171 @@
   <section class="content-section" id="leaderboard">
     <div class="section-inner wide">
       <h2 class="section-title" data-en="Leaderboard" data-zh="排行榜">Leaderboard</h2>
-      <img src="./image/leaderboard.png" alt="Evaluation Leaderboard" class="section-img">
+      <p class="leaderboard-subtitle" data-en="LIBERO Benchmark — Success Rate (%)" data-zh="LIBERO 基准 — 成功率 (%)">LIBERO
+        Benchmark — Success Rate (%)</p>
+
+      <!-- Model Filter Tabs -->
+      <div class="lb-controls">
+        <div class="lb-tabs">
+          <button class="lb-tab active" data-filter="all" data-en="All Models" data-zh="全部模型">All Models</button>
+          <button class="lb-tab" data-filter="pi" data-en="π0.5" data-zh="π0.5">π0.5</button>
+          <button class="lb-tab" data-filter="groot" data-en="GR00T N1.5" data-zh="GR00T N1.5">GR00T N1.5</button>
+        </div>
+        <div class="lb-methods">
+          <label class="lb-check"><input type="checkbox" value="baseline" checked> <span data-en="Baseline (FP16)"
+              data-zh="基线 (FP16)">Baseline (FP16)</span></label>
+          <label class="lb-check"><input type="checkbox" value="smoothquant" checked> <span>SmoothQuant</span></label>
+          <label class="lb-check"><input type="checkbox" value="duquant" checked> <span>DuQuant</span></label>
+          <label class="lb-check"><input type="checkbox" value="quantvla" checked> <span>QuantVLA</span></label>
+        </div>
+      </div>
+
+      <!-- Interactive Table -->
+      <div class="lb-table-wrap">
+        <table class="lb-table" id="lbTable">
+          <thead>
+            <tr>
+              <th class="lb-sortable" data-col="0" data-en="Model" data-zh="模型">Model <span class="sort-icon">⇅</span>
+              </th>
+              <th data-en="Precision" data-zh="精度">Precision</th>
+              <th data-en="Layer Selection" data-zh="层选择">Layer Selection</th>
+              <th class="lb-sortable" data-col="3" data-en="Spatial" data-zh="空间">Spatial <span
+                  class="sort-icon">⇅</span></th>
+              <th class="lb-sortable" data-col="4" data-en="Object" data-zh="物体">Object <span class="sort-icon">⇅</span>
+              </th>
+              <th class="lb-sortable" data-col="5" data-en="Goal" data-zh="目标">Goal <span class="sort-icon">⇅</span>
+              </th>
+              <th class="lb-sortable" data-col="6" data-en="Long" data-zh="长序列">Long <span class="sort-icon">⇅</span>
+              </th>
+              <th class="lb-sortable" data-col="7" data-en="Avg" data-zh="平均">Avg <span class="sort-icon">⇅</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- π0.5 rows -->
+            <tr data-model="pi" data-method="baseline">
+              <td>π0.5</td>
+              <td>FP16</td>
+              <td>–</td>
+              <td>98.50</td>
+              <td>99.00</td>
+              <td>97.50</td>
+              <td>93.50</td>
+              <td>97.10</td>
+            </tr>
+            <tr data-model="pi" data-method="smoothquant">
+              <td>+SmoothQuant</td>
+              <td>W8A8</td>
+              <td>LLM</td>
+              <td>97.50</td>
+              <td>98.50</td>
+              <td>98.00</td>
+              <td>92.50</td>
+              <td>96.60</td>
+            </tr>
+            <tr data-model="pi" data-method="smoothquant">
+              <td>+SmoothQuant</td>
+              <td>W8A8</td>
+              <td>LLM + DiT(MLP)</td>
+              <td>98.00</td>
+              <td>99.00</td>
+              <td>99.00</td>
+              <td>92.00</td>
+              <td>97.00</td>
+            </tr>
+            <tr data-model="pi" data-method="duquant">
+              <td>+DuQuant</td>
+              <td>W4A8</td>
+              <td>LLM</td>
+              <td>98.00</td>
+              <td>98.50</td>
+              <td>97.50</td>
+              <td>92.00</td>
+              <td>96.50</td>
+            </tr>
+            <tr data-model="pi" data-method="duquant">
+              <td>+DuQuant</td>
+              <td>W4A8</td>
+              <td>LLM + DiT(MLP)</td>
+              <td>98.00</td>
+              <td>97.00</td>
+              <td>94.50</td>
+              <td>92.00</td>
+              <td>95.40</td>
+            </tr>
+            <tr data-model="pi" data-method="quantvla" class="lb-highlight">
+              <td><strong>+QuantVLA</strong></td>
+              <td>W4A8</td>
+              <td>LLM</td>
+              <td>98.50</td>
+              <td>99.00</td>
+              <td>96.50</td>
+              <td>96.50</td>
+              <td><strong>97.60</strong></td>
+            </tr>
+            <tr data-model="pi" data-method="quantvla" class="lb-highlight">
+              <td><strong>+QuantVLA</strong></td>
+              <td>W4A8</td>
+              <td>LLM + DiT(MLP)</td>
+              <td>98.50</td>
+              <td>98.00</td>
+              <td>98.00</td>
+              <td>96.00</td>
+              <td><strong>97.60</strong></td>
+            </tr>
+            <!-- GR00T N1.5 rows -->
+            <tr data-model="groot" data-method="baseline">
+              <td>GR00T N1.5</td>
+              <td>FP16</td>
+              <td>–</td>
+              <td>92.00</td>
+              <td>92.00</td>
+              <td>86.00</td>
+              <td>76.00</td>
+              <td>86.50</td>
+            </tr>
+            <tr data-model="groot" data-method="duquant">
+              <td>+DuQuant</td>
+              <td>W4A8</td>
+              <td>LLM</td>
+              <td>86.00</td>
+              <td>92.00</td>
+              <td>80.00</td>
+              <td>80.00</td>
+              <td>84.50</td>
+            </tr>
+            <tr data-model="groot" data-method="duquant">
+              <td>+DuQuant</td>
+              <td>W4A8</td>
+              <td>LLM + DiT</td>
+              <td>66.00</td>
+              <td>70.00</td>
+              <td>68.00</td>
+              <td>76.00</td>
+              <td>70.00</td>
+            </tr>
+            <tr data-model="groot" data-method="quantvla" class="lb-highlight">
+              <td><strong>+QuantVLA</strong></td>
+              <td>W4A8</td>
+              <td>LLM</td>
+              <td>96.00</td>
+              <td>94.00</td>
+              <td>92.00</td>
+              <td>66.00</td>
+              <td>87.00</td>
+            </tr>
+            <tr data-model="groot" data-method="quantvla" class="lb-highlight">
+              <td><strong>+QuantVLA</strong></td>
+              <td>W4A8</td>
+              <td>LLM + DiT</td>
+              <td>96.00</td>
+              <td>92.00</td>
+              <td>90.00</td>
+              <td>74.00</td>
+              <td><strong>88.00</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 
@@ -296,6 +460,63 @@
 
         document.querySelectorAll('[data-en][data-zh]').forEach(function (el) {
           el.innerHTML = el.getAttribute('data-' + lang);
+        });
+      });
+    })();
+
+    // Leaderboard interactivity
+    (function () {
+      const table = document.getElementById('lbTable');
+      if (!table) return;
+      const rows = Array.from(table.querySelectorAll('tbody tr'));
+      const tabs = document.querySelectorAll('.lb-tab');
+      const checks = document.querySelectorAll('.lb-check input');
+      let activeModel = 'all';
+
+      function applyFilters() {
+        const activeMethods = Array.from(checks).filter(c => c.checked).map(c => c.value);
+        rows.forEach(function (row) {
+          const model = row.getAttribute('data-model');
+          const method = row.getAttribute('data-method');
+          const modelMatch = activeModel === 'all' || model === activeModel;
+          const methodMatch = activeMethods.includes(method);
+          row.classList.toggle('lb-hidden', !(modelMatch && methodMatch));
+        });
+      }
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          activeModel = tab.getAttribute('data-filter');
+          applyFilters();
+        });
+      });
+
+      checks.forEach(function (cb) {
+        cb.addEventListener('change', applyFilters);
+      });
+
+      // Column sorting
+      let sortCol = -1, sortAsc = true;
+      table.querySelectorAll('th.lb-sortable').forEach(function (th) {
+        th.addEventListener('click', function () {
+          const col = parseInt(th.getAttribute('data-col'));
+          if (sortCol === col) { sortAsc = !sortAsc; } else { sortCol = col; sortAsc = false; }
+          const tbody = table.querySelector('tbody');
+          rows.sort(function (a, b) {
+            let va = a.children[col].textContent.trim();
+            let vb = b.children[col].textContent.trim();
+            const na = parseFloat(va), nb = parseFloat(vb);
+            if (!isNaN(na) && !isNaN(nb)) {
+              return sortAsc ? na - nb : nb - na;
+            }
+            return sortAsc ? va.localeCompare(vb) : vb.localeCompare(va);
+          });
+          rows.forEach(r => tbody.appendChild(r));
+          // Update sort icons
+          table.querySelectorAll('.sort-icon').forEach(s => s.textContent = '⇅');
+          th.querySelector('.sort-icon').textContent = sortAsc ? '↑' : '↓';
         });
       });
     })();
