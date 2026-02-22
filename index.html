@@ -545,6 +545,9 @@
           const col = parseInt(th.getAttribute('data-col'));
           const tbody = table.querySelector('tbody');
 
+          // Clear previous highlight
+          table.querySelectorAll('.lb-col-active').forEach(el => el.classList.remove('lb-col-active'));
+
           if (col === 1) {
             // Method column: reset to default order
             rows.sort(function (a, b) {
@@ -561,6 +564,9 @@
             });
             table.querySelectorAll('.sort-icon').forEach(s => s.textContent = '⇅');
             th.querySelector('.sort-icon').textContent = sortAsc ? '↑' : '↓';
+            // Highlight active column
+            th.classList.add('lb-col-active');
+            rows.forEach(r => { if (r.children[col]) r.children[col].classList.add('lb-col-active'); });
           }
           rows.forEach(r => tbody.appendChild(r));
         });
