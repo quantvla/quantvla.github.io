@@ -222,7 +222,7 @@
           <thead>
             <tr>
               <th data-en="Base Model" data-zh="基础模型">Base Model</th>
-              <th class="lb-sortable" data-col="1" data-en="Method" data-zh="方法">Method <span class="sort-icon">⇅</span>
+              <th class="lb-sortable" data-col="1" data-en="Method" data-zh="方法">Method <span class="sort-icon">↺</span>
               </th>
               <th data-en="Precision" data-zh="精度">Precision</th>
               <th data-en="Layer Selection" data-zh="层选择">Layer Selection</th>
@@ -554,7 +554,7 @@
               return parseInt(a.getAttribute('data-orig')) - parseInt(b.getAttribute('data-orig'));
             });
             sortCol = -1;
-            table.querySelectorAll('.sort-icon').forEach(s => s.textContent = '⇅');
+            table.querySelectorAll('th.lb-sortable .sort-icon').forEach(function (s) { s.textContent = s.closest('th').getAttribute('data-col') === '1' ? '↺' : '⇅'; });
           } else {
             if (sortCol === col) { sortAsc = !sortAsc; } else { sortCol = col; sortAsc = false; }
             rows.sort(function (a, b) {
@@ -562,7 +562,7 @@
               const nb = parseFloat(b.children[col].textContent.trim());
               return sortAsc ? na - nb : nb - na;
             });
-            table.querySelectorAll('.sort-icon').forEach(s => s.textContent = '⇅');
+            table.querySelectorAll('th.lb-sortable .sort-icon').forEach(function (s) { s.textContent = s.closest('th').getAttribute('data-col') === '1' ? '↺' : '⇅'; });
             th.querySelector('.sort-icon').textContent = sortAsc ? '↑' : '↓';
             // Highlight active column
             th.classList.add('lb-col-active');
