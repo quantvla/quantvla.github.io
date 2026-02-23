@@ -253,6 +253,168 @@ body {
   }
 }
 
+/* ===== CVPR 2026 Corner Ribbon ===== */
+.cvpr-corner-ribbon {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1100;
+  overflow: hidden;
+  width: 150px;
+  height: 150px;
+  pointer-events: none;
+}
+
+.cvpr-corner-ribbon a {
+  display: block;
+  position: absolute;
+  right: -40px;
+  top: 30px;
+  width: 200px;
+  padding: 8px 0;
+  background: linear-gradient(135deg, #d32f2f 0%, #f44336 40%, #ff5252 100%);
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transform: rotate(45deg);
+  box-shadow: 0 4px 20px rgba(211, 47, 47, 0.5);
+  pointer-events: auto;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.cvpr-corner-ribbon a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: ribbon-shimmer 3s ease-in-out infinite;
+}
+
+@keyframes ribbon-shimmer {
+  0% {
+    left: -100%;
+  }
+
+  50%,
+  100% {
+    left: 200%;
+  }
+}
+
+.cvpr-corner-ribbon a:hover {
+  background: linear-gradient(135deg, #b71c1c 0%, #d32f2f 40%, #f44336 100%);
+  box-shadow: 0 4px 30px rgba(211, 47, 47, 0.7);
+}
+
+.cvpr-corner-ribbon a span {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== CVPR 2026 Hero Badge ===== */
+.cvpr-badge {
+  display: inline-block;
+  text-decoration: none;
+  margin-bottom: 1rem;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.cvpr-badge:hover {
+  transform: scale(1.05) translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.cvpr-badge-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 28px 12px 16px;
+  background: linear-gradient(135deg, rgba(211, 47, 47, 0.15), rgba(244, 67, 54, 0.1), rgba(255, 82, 82, 0.08));
+  border: 2px solid rgba(244, 67, 54, 0.5);
+  border-radius: 60px;
+  backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
+  animation: cvpr-glow 4s ease-in-out infinite;
+}
+
+.cvpr-badge-inner::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 62px;
+  padding: 2px;
+  background: linear-gradient(135deg, #f44336, #ff9800, #f44336, #ff5252);
+  background-size: 300% 300%;
+  animation: cvpr-border-flow 4s ease infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+@keyframes cvpr-border-flow {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes cvpr-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 15px rgba(244, 67, 54, 0.2), 0 0 30px rgba(244, 67, 54, 0.1);
+  }
+
+  50% {
+    box-shadow: 0 0 25px rgba(244, 67, 54, 0.4), 0 0 50px rgba(244, 67, 54, 0.2);
+  }
+}
+
+.cvpr-logo-svg {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.cvpr-badge-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cvpr-conf {
+  font-size: 1.15rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  color: #ff8a80;
+  text-shadow: 0 0 20px rgba(244, 67, 54, 0.5);
+}
+
+.cvpr-status {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #69f0ae;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
 /* Author info in hero */
 .hero-authors {
   color: rgba(255, 255, 255, 0.75);
