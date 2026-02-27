@@ -719,6 +719,7 @@ body {
   border-radius: var(--radius-sm);
   padding: 1.5rem;
   overflow-x: auto;
+  position: relative;
 }
 
 .bibtex-box code {
@@ -727,6 +728,42 @@ body {
   font-family: 'Courier New', monospace;
   white-space: pre;
   line-height: 1.6;
+}
+
+.bibtex-copy-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.82rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  z-index: 2;
+}
+
+.bibtex-copy-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.bibtex-copy-btn:active {
+  transform: scale(0.95);
+}
+
+.bibtex-copy-btn.copied {
+  background: rgba(6, 214, 160, 0.2);
+  border-color: rgba(6, 214, 160, 0.5);
+  color: #06d6a0;
 }
 
 /* ===== Footer ===== */
